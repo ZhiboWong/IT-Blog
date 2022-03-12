@@ -6,7 +6,7 @@ Stelnet提供安全的认证方式，用户可以通过STelnet安全地登录远
 用户需要安全地登录远程设备，并对其进行方便地管理和维护：
 设备作为SSH Server，IP地址为10.137.217.203/24。
 
-![image-20211022100928409](D:\_Working\SYS\Networking\HCIA\.assets\image-20211022100928409.png)
+
 
 ## 2、前提条件
 

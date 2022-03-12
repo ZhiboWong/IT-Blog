@@ -16,5 +16,6 @@ dhcp enable
 ip pool dhcp10	#创建地址池，之后进入IP地址池视图
  gateway-list 192.168.10.1	#设置网关
  network 192.168.10.0 mask 255.255.255.0	#设置ip地址段
+ section section-id start-address [ end-address ] #配置全局地址池中的IP地址段
 ```
 

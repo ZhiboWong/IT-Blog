@@ -29,7 +29,35 @@ uname -a 查看Linux内核版本命令
 
 ## 1、目录名：
 
-/boot：顾名思义/root ：同上/run：同上/home：同上/etc：ETCetera/bin：BINaries/dev：DEVices/lib：LIBraries/mnt：MouNT/proc：PROCesses/tmp：TeMPorary/var：VARiable/srv：SeRVices/opt：OPTional/sbin：Super BINariesor Superuser BINaries/
+/boot：顾名思义、
+
+/root ：同上
+
+/run：同上
+
+/home：同上
+
+/etc：ETCetera
+
+/bin：BINaries
+
+/dev：DEVices
+
+/lib：LIBraries
+
+/mnt：MouNT
+
+/proc：PROCesses
+
+/tmp：TeMPorary
+
+/var：VARiable
+
+/srv：SeRVices
+
+/opt：OPTional
+
+/sbin：Super BINariesor || Superuser BINaries/
 
 sys：SYStem
 
@@ -205,7 +233,9 @@ systemd -- SYSTEM Daemon (里面有systemctl bootctl journalctl loginctl localec
 
 ### 2.6、编辑器：
 
-ed -- EDitornano -- Nano's ANOther 
+ed -- EDitor
+
+nano -- Nano's ANOther 
 
 editoremacs -- Editor MACroS（还有很多全称，就不罗列了，这个接受度比较广）
 
@@ -223,7 +253,19 @@ g++ -- Gnu c++ compiler
 
 gcj -- Gnu Compiler for Java
 
-yacc -- Yet Another Compiler Compilerguile -- Gnu Ubiquitous Intelligent Language for Extensionsgas -- Gnu Assemblerphp -- PHP：Hypertext Preprocessorld -- LoaDgdb -- Gnu DeBugtcl -- Tool Command Line
+yacc -- Yet Another Compiler Compiler
+
+guile -- Gnu Ubiquitous Intelligent Language for Extensions
+
+gas -- Gnu Assembler
+
+php -- PHP：Hypertext Preprocessor
+
+ld -- LoaD
+
+gdb -- Gnu DeBug
+
+tcl -- Tool Command Line
 
 ## 3、图形界面：
 
