@@ -1,0 +1,129 @@
+<svg viewBox="0 0 900 328" xmlns:xlink="http://www.w3.org/1999/xlink" width="900" height="328" xmlns="http://www.w3.org/2000/svg">
+    <defs/>
+    <g transform="translate(-46.00,-115.00)">
+        <g id="shape1" transform="translate(148.44,189.00)">
+            <path fill="#00aeee" d="M.0,.0L57.0,.0L57.0,38.0L.0,38.0L.0,.0z" fill-rule="nonzero"/>
+            <text style="fill:#191919;font-family:Microsoft YaHei;font-size:10.00pt" xml:space="preserve">
+                <tspan y="23.1" x="8.1">Server</tspan>
+            </text>
+        </g>
+        <g id="shape2" transform="translate(151.00,265.29)">
+            <path fill="#00aeee" stroke="#323232" d="M.0,29.4L.0,.0L57.0,.0L57.0,29.4L57.0,29.4C52.9,26.8,48.0,25.2,42.8,25.2C37.5,25.2,32.6,26.8,28.5,29.4L28.5,29.4C24.4,32.1,19.5,33.6,14.3,33.6C9.0,33.6,4.1,32.1,.0,29.4z" fill-rule="nonzero"/>
+            <text style="fill:#191919;font-family:Microsoft YaHei;font-size:6.00pt" xml:space="preserve">
+                <tspan y="15.9" x="6.9">Option 125</tspan>
+            </text>
+        </g>
+        <g id="group3" transform="translate(47.00,337.20)">
+            <g id="shape4" transform="translate(0.00,-0.00)">
+                <path fill="#00aeee" stroke="#323232" d="M265.0,105.3L265.0,.0L.0,.0L.0,105.3L265.0,105.3z" fill-rule="nonzero"/>
+                <text style="fill:#191919;font-family:Microsoft YaHei;font-size:10.00pt" xml:space="preserve">
+                    <tspan y="56.7" x="92.5">Offer Packet</tspan>
+                </text>
+            </g>
+            <g id="shape5" transform="translate(0.00,13.19)">
+                <path fill="#00aeee" stroke="#323232" d="M.0,29.4L.0,.0L57.0,.0L57.0,29.4L57.0,29.4C52.9,26.8,48.0,25.2,42.8,25.2C37.5,25.2,32.6,26.8,28.5,29.4L28.5,29.4C24.4,32.1,19.5,33.6,14.3,33.6C9.0,33.6,4.1,32.1,.0,29.4z" fill-rule="nonzero"/>
+                <text style="fill:#191919;font-family:Microsoft YaHei;font-size:6.00pt" xml:space="preserve">
+                    <tspan y="15.9" x="6.9">Option 125</tspan>
+                </text>
+            </g>
+        </g>
+        <g id="shape6" transform="translate(179.50,227.00)">
+            <path stroke="#191919" fill="none" d="M.0,.0L.0,32.3"/>
+            <path fill="#191919" stroke="#191919" stroke-width="1" d="M3.0,32.3L.0,38.3L-3.0,32.3L3.0,32.3" stroke-linecap="round"/>
+            <rect fill="#ffffff" width="27.2" height="18.4" y="6.0" x="-12.6"/>
+            <text style="fill:#191919;font-family:Microsoft YaHei;font-size:10.00pt" xml:space="preserve">
+                <tspan y="20.4" x="-12.6">封装</tspan>
+            </text>
+        </g>
+        <g id="shape7" transform="translate(179.50,294.71)">
+            <path stroke="#191919" fill="none" d="M.0,.0L-0.0,36.5"/>
+            <path fill="#191919" stroke="#191919" stroke-width="1" d="M3.0,36.5L-0.0,42.5L-3.0,36.5L3.0,36.5" stroke-linecap="round"/>
+            <rect fill="#ffffff" width="48.0" height="18.4" y="10.2" x="-23.0"/>
+            <text style="fill:#191919;font-family:Microsoft YaHei;font-size:10.00pt" xml:space="preserve">
+                <tspan y="24.6" x="-23.0">Add To</tspan>
+            </text>
+        </g>
+        <g id="shape8" transform="translate(425.50,377.85)">
+            <path fill="#d2e18f" d="M.0,.0L57.0,.0L57.0,38.0L.0,38.0L.0,.0z" fill-rule="nonzero"/>
+            <text style="fill:#191919;font-family:Microsoft YaHei;font-size:10.00pt" xml:space="preserve">
+                <tspan y="23.1" x="9.7">Client</tspan>
+            </text>
+        </g>
+        <g id="shape9" transform="translate(482.00,282.69)">
+            <path fill="#00aeee" stroke="#323232" d="M.0,29.4L.0,.0L57.0,.0L57.0,29.4L57.0,29.4C52.9,26.8,48.0,25.2,42.8,25.2C37.5,25.2,32.6,26.8,28.5,29.4L28.5,29.4C24.4,32.1,19.5,33.6,14.3,33.6C9.0,33.6,4.1,32.1,.0,29.4z" fill-rule="nonzero"/>
+            <text style="fill:#191919;font-family:Microsoft YaHei;font-size:6.00pt" xml:space="preserve">
+                <tspan y="15.9" x="6.9">Option 125</tspan>
+            </text>
+        </g>
+        <g id="shape10" transform="translate(369.00,280.30)">
+            <path fill="#ffffff" stroke="#323232" d="M.0,33.7L.0,.0L57.0,.0L57.0,33.7L57.0,33.7C53.0,30.7,48.1,28.9,42.8,28.9C37.4,28.9,32.5,30.7,28.5,33.7L28.5,33.7C24.5,36.6,19.6,38.4,14.3,38.4C8.9,38.4,4.0,36.6,.0,33.7z" fill-rule="nonzero"/>
+            <text style="fill:#191919;font-family:Microsoft YaHei;font-size:5.00pt" xml:space="preserve">
+                <tspan y="16.4" x="7.7">Option data 1</tspan>
+            </text>
+        </g>
+        <g id="shape11" transform="translate(437.50,278.00)">
+            <text style="fill:#191919;font-family:Microsoft YaHei;font-size:15.00pt" xml:space="preserve">
+                <tspan y="28.0" x="5.7">!=</tspan>
+            </text>
+        </g>
+        <g id="shape12" transform="translate(335.00,129.00)">
+            <path fill="#d2e18f" stroke="#323232" d="M100.0,60.0L100.0,.0L.0,.0L.0,60.0L100.0,60.0z" fill-rule="nonzero"/>
+            <text style="fill:#191919;font-family:Microsoft YaHei;font-size:10.00pt" xml:space="preserve">
+                <tspan y="24.6" x="23.6">Request </tspan>
+                <tspan y="43.0" x="28.8">Packet</tspan>
+            </text>
+        </g>
+        <g id="group13" transform="translate(680.00,161.85)">
+            <g id="shape14">
+                <path fill="#00aeee" stroke="#323232" d="M265.0,105.3L265.0,.0L.0,.0L.0,105.3L265.0,105.3z" fill-rule="nonzero"/>
+                <text style="fill:#191919;font-family:Microsoft YaHei;font-size:10.00pt" xml:space="preserve">
+                    <tspan y="56.7" x="92.5">Offer Packet</tspan>
+                </text>
+            </g>
+            <g id="shape15" transform="translate(0.00,13.19)">
+                <path fill="#00aeee" stroke="#323232" d="M.0,29.4L.0,.0L57.0,.0L57.0,29.4L57.0,29.4C52.9,26.8,48.0,25.2,42.8,25.2C37.5,25.2,32.6,26.8,28.5,29.4L28.5,29.4C24.4,32.1,19.5,33.6,14.3,33.6C9.0,33.6,4.1,32.1,.0,29.4z" fill-rule="nonzero"/>
+                <text style="fill:#191919;font-family:Microsoft YaHei;font-size:6.00pt" xml:space="preserve">
+                    <tspan y="15.9" x="6.9">Option 125</tspan>
+                </text>
+            </g>
+        </g>
+        <g id="shape16" transform="translate(567.00,168.65)">
+            <text style="fill:#191919;font-family:Microsoft YaHei;font-size:18.00pt" xml:space="preserve">
+                <tspan y="45.0" x="11.9">Discard</tspan>
+            </text>
+        </g>
+        <g id="shape17" transform="translate(237.50,116.00)">
+            <text style="fill:#191919;font-family:Microsoft YaHei;font-size:18.00pt" xml:space="preserve">
+                <tspan y="45.0" x="26.4">Send</tspan>
+            </text>
+        </g>
+        <g id="shape18" transform="translate(454.00,283.00)">
+            <path stroke="#191919" fill="none" d="M.0,.0L.0,-77.3L-242.6,-77.3"/>
+            <path fill="#191919" stroke="#191919" stroke-width="1" d="M-242.6,-74.3L-248.6,-77.3L-242.6,-80.3L-242.6,-74.3" stroke-linecap="round"/>
+            <rect fill="#ffffff" width="22.4" height="18.4" y="-87.6" x="-148.5"/>
+            <text style="fill:#191919;font-family:Microsoft YaHei;font-size:10.00pt" xml:space="preserve">
+                <tspan y="-73.2" x="-148.5">Yes</tspan>
+            </text>
+        </g>
+        <g id="shape19" transform="translate(454.00,205.65)">
+            <path stroke="#191919" fill="none" d="M.0,.0L107.0,.0"/>
+            <path fill="#191919" stroke="#191919" stroke-width="1" d="M107.0,-3.0L113.0,.0L107.0,3.0L107.0,-3.0" stroke-linecap="round"/>
+            <rect fill="#ffffff" width="20.0" height="18.4" y="-10.3" x="47.1"/>
+            <text style="fill:#191919;font-family:Microsoft YaHei;font-size:10.00pt" xml:space="preserve">
+                <tspan y="4.1" x="47.1">No</tspan>
+            </text>
+        </g>
+        <g id="shape20" transform="translate(312.00,389.85)">
+            <path stroke="#191919" fill="none" d="M.0,.0L107.5,.0"/>
+            <path fill="#191919" stroke="#191919" stroke-width="1" d="M107.5,-3.0L113.5,.0L107.5,3.0L107.5,-3.0" stroke-linecap="round"/>
+            <rect fill="#ffffff" width="53.6" height="18.4" y="-10.3" x="33.1"/>
+            <text style="fill:#191919;font-family:Microsoft YaHei;font-size:10.00pt" xml:space="preserve">
+                <tspan y="4.1" x="33.1">Send To</tspan>
+            </text>
+        </g>
+        <g id="shape21" transform="translate(457.26,377.85)">
+            <path stroke="#191919" fill="none" d="M.0,.0L.0,-50.9"/>
+            <path fill="#191919" stroke="#191919" stroke-width="1" d="M-3.0,-50.9L.0,-56.9L3.0,-50.9L-3.0,-50.9" stroke-linecap="round"/>
+        </g>
+    </g>
+</svg>
