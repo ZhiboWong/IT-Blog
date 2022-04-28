@@ -1,0 +1,1 @@
+将BIOS的Secure Boot关闭即可
