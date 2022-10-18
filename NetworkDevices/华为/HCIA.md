@@ -20,7 +20,7 @@
 | 信息目的地 |            Destination            |
 |   个域网   |    Personal Area Network，PAN     |
 |   局域网   |      Local Area Network，LAN      |
-|   园区网   |    CAN 	Campus Area Network    |
+|   园区网   |     CAN 	Campus Area Network      |
 |   城域网   |  Metropolitan Area Network，MAN   |
 |   广域网   |     Wide Area Network    WAN      |
 | 无线广域网 | WWAN   Wireless Wide Area Network |
@@ -421,7 +421,7 @@ echo request 和echo reply。
 ## P9 ARP
 
 arp的request在广播域里是无法拒收的。既然是广播那么目标MAC就是全F。arp不能穿越三层接口。
-
+ARP是TCP/IP协议栈里最不安全的protocol。ARP攻击也是局域网攻击里使用最多的。
 ### arp proxy
 
 实现步骤：
@@ -446,11 +446,11 @@ ARP防火墙原理：手动记住网关MAC，免受ARP欺骗。
 
 五元组：源IP，目的IP，源端口号，目的端口号，协议
 
-| 端口号范围  | 端口类别      | TCP                                                          | UDP                  | TCP&UDP通用          |
-| ----------- | ------------- | ------------------------------------------------------------ | -------------------- | -------------------- |
+| 端口号范围  | 端口类别      | TCP                                                                                                                   | UDP                  | TCP&UDP通用          |
+| ----------- | ------------- | --------------------------------------------------------------------------------------------------------------------- | -------------------- | -------------------- |
 | 0-1023      | 公认端口      | 21 FTP<br />23 Telnet<br />25 SMTP<br />80 HTTP<br />110 POP3<br />194 Internet中继聊天(IRC)<br />443 安全HTTP(HTTPS) | 69 TFTP<br />520 RIP | 53 NDS<br />161 SNMP |
-| 1024-49151  | 注册端口      | 1863 MSN Messenger<br />8008 HTTP备用<br />8080 HTTP备用     |                      |                      |
-| 49152-65535 | 私有&动态端口 |                                                              |                      |                      |
+| 1024-49151  | 注册端口      | 1863 MSN Messenger<br />8008 HTTP备用<br />8080 HTTP备用                                                              |                      |                      |
+| 49152-65535 | 私有&动态端口 |                                                                                                                       |                      |                      |
 
 
 
@@ -619,17 +619,24 @@ directory -read-write
 
 设置startup configuration。
 
+## P31 FTP原理与配置
 
+通过FTP可以备份网络设备的VRP、配置文件。
+在使用FTP Protocol进行路由器软件升级时，传输模式应选用二进制模式。
 
-## P17交换网络基础
+## SW
+
+### P17交换网络基础
 
 > 当一台主机从交换机的一个端口移动到另外一个端口时，交换机的MAC地址表会发生什么变化？
 
 即使在未移动之前，交换机CAM表里已经有端口和MAC信息，当拔掉网线进行移动时，CAM表立刻老化。后期交换机再接收到帧时，最终经过交换机的学习，交换机将学习CAM表。
 
+### VLAN间路由
 
+MLS（MultiLayer Switch）是执行三层信息的硬件交换的交换机,即有带ip的vlanif 接口的SW，可实现VLAN间路由。
 
-## P18 STP
+### P18 STP
 
 BID=Brideg ID=桥ID
 
@@ -653,7 +660,7 @@ Learning状态下交换机学习MAC地址。
 
 
 
-## P19 BPDU
+### P19 BPDU
 
 为了计算生成树，SW之间需要交换相关信息和参数，这些信息和参数被封装在BPDU(Bridge Protocol Data Unit,桥协议数据单元)中。
 
@@ -698,7 +705,7 @@ TCN BPDU指的是下游SW感知到拓扑发生变化时向上游发送的拓扑�
 
 ![微信图片_20211119152150](.assets/微信图片_20211119152150.jpg)
 
-SW的默认STP Mode不是802.1d，而是MST。
+SW的默认STP Mode不是802.1d，而是MSTP。
 
 ```
 [Huawei]stp mode ?
@@ -741,10 +748,6 @@ Last TC occurred    :GigabitEthernet0/0/1
 
 
 
-
-## P31 FTP原理与配置
-
-通过FTP可以备份网络设备的VRP、配置文件。
 
 
 
@@ -940,7 +943,7 @@ RIP routing table status : <Inactive>
 
 > 若在R3再开个lo4，ip为3.3.15.3/24，R2能ping R3吗？
 
-添加玩lo4后，尝试从R2 ping R3，发现虽然第一次丢包了，但是之后能ping通。再次查看R2 rip 路由表。 
+添加完lo4后，尝试从R2 ping R3，发现虽然第一次丢包了，但是之后能ping通。再次查看R2 rip 路由表。 
 
 ```python
 [R2]dis ip routing-table protocol rip
@@ -1101,3 +1104,391 @@ Cost越小，越优先。但比如说，Cost小的百兆路线，显然是不如
 OSPF协议的优先级(优先数是10，越小级别越高)比rip高。
 
 RIPv2才支持mask，v1不支持。而OSPF支持mask。
+
+## HDLC&PPP
+
+### 前言
+    广域网中经常会使用串行链路来提供远距离的数据传输，高级数据链路控制HDLC（High-Level Data Link Control）和点对点协议PPP（ Point to Point Protocol）是两种典型的串口封装协议。
+### 串行链路的数据传输方式
+![](vx_images/447835613220559.png)
+串行链路普遍用于广域网中。串行链路中定义了两种数据传输方式：异步和同步。 
+**异步传输**是以字节为单位来传输数据，并且需要采用额外的起始位和停止位来标记每个字节的开始和结束。起始位为二进制值0，停止位为二进制值1。在这种传输方式下，开始和停止位占据发送数据的相当大的比例，每个字节的发送都需要额外的开销。
+**同步传输**是以帧为单位来传输数据，在通信时需要使用时钟来同步本端和对端的设备通信。DCE即数据通信设备，它提供了一个用于同步DCE设备和DTE设备之间数据传输的时钟信号。DTE即数据终端设备，它通常使用DCE产生的时钟信号。
+### HDLC
+#### HDLC协议应用
+![](vx_images/6551714238985.png)
+High-level Data Link Control，高级数据链路控制，简称HDLC，是一种面向比特的链路层协议。
+ISO制定的HDLC是一种面向比特的通信规则。HDLC传送的信息单位为帧。作为面向比特的同步数据控制协议的典型，HDLC具有如下特点：
+协议不依赖于任何一种字符编码集；
+数据报文可透明传输，用于透明传输的“0比特插入法”易于硬件实现；
+全双工通信，不必等待确认可连续发送数据，有较高的数据链路传输效率；
+所有帧均采用CRC校验，并对信息帧进行编号，可防止漏收或重收，传输可靠性高；
+传输控制功能与处理功能分离，具有较大的灵活性和较完善的控制功能。
+#### HDLC帧结构
+![](vx_images/177600811220560.png)
+HDLC有三种类型的帧：信息帧、监控帧、无编号帧。
+完整的HDLC帧由标志字段（F）、地址字段（A）、控制字段（C）、信息字段（I）、帧校验序列字段（FCS）等组成。
+标志字段为01111110，用以标志帧的开始与结束，也可以作为帧与帧之间的填充字符。
+地址字段携带的是地址信息。
+控制字段用于构成各种命令及响应，以便对链路进行监视与控制。发送方利用控制字段来通知接收方来执行约定的操作；相反，接收方用该字段作为对命令的响应，报告已经完成的操作或状态的变化。
+信息字段可以包含任意长度的二进制数，其上限由FCS字段或通讯节点的缓存容量来决定，目前用得较多的是1000-2000比特，而下限可以是0，即无信息字段。监控帧中不能有信息字段。
+帧检验序列字段可以使用16位CRC对两个标志字段之间的内容进行校验。
+
+HDLC有三种类型的帧：
+1. 信息帧（I帧）用于传送有效信息或数据，通常简称为I帧。
+2. 监控帧（S帧）用于差错控制和流量控制，通常称为S帧。S帧的标志是控制字段的前两个比特位为“10”。S帧不带信息字段，只有6个字节即48个比特。
+3. 无编号帧（U帧）简称U帧。U帧用于提供对链路的建立、拆除以及多种控制功能。
+#### HDLC基本配置
+![picture 1](images/32c47cc3edc948b41957664de4c1aa086c8bd8ab21d3ef5454552b5b24c987b9.png) 
+``` 
+[RTA]interface Serial 1/0/0 
+[RTA-Serial1/0/0]link-protocol hdlc 
+Warning: The encapsulation protocol of the link will be changed. Continue? [Y/N]:y 
+[RTA-Serial1/0/0]ip address 10.0.1.1 30
+```
+用户只需要在串行接口视图下运行link-protocol hdlc命令就可以使能接口的HDLC协议。华为设备上的串行接口默认运行PPP协议。用户必须在串行链路两端的端口上配置相同的链路协议，双方才能通信。
+#### HDLC接口地址借用
+![picture 2](images/61fd3640d0727cd5dcc5bf5827c937bb99391609af10d615d7047663c9b01aea.png)  
+```
+[RTA]interface Serial 1/0/0 
+[RTA-Serial1/0/0]link-protocol hdlc 
+Warning: The encapsulation protocol of the link will be changed. Continue? [Y/N]:y 
+[RTA-Serial1/0/0]ip address unnumbered interface loopBack 0
+[RTA]ip route-static 10.1.1.0 24 Serial 1/0/0 
+```
+串行接口可以借用Loopback接口的IP地址和对端建立连接。
+一个接口如果没有IP地址就无法生成路由，也就无法转发报文。IP地址借用允许一个没有IP地址的接口从其它接口借用IP地址。这样可以避免一个接口独占IP地址，节省IP地址资源。一般建议借用loopback接口的IP地址，因为这类接口总是处于活跃（active）状态，因而能提供稳定可用的IP地址。
+本例中，在RTA的S1/0/0接口配置完接口地址借用之后，还需要在RTA上配置静态路由，以使RTA能够转发数据到10.1.1.0/24网络。
+例如ip route-static 10.1.1.2 32 s1/0/0
+#### 配置验证
+```
+[RTA]display ip interface brief 
+*down: administratively down ^down: standby (l): loopback
+(s): spoofing
+……
+Interface                IP Address/Mask    Physical   Protocol  
+LoopBack0                10.1.1.1/32          up         up(s)     
+Serial1/0/0              10.1.1.1/32          up         up      
+Serial1/0/1              unassigned           up         down      
+```
+执行display ip interface brief命令可以查看路由器接口简要信息。如果有IP地址被借用，该IP地址会显示在多个接口上，说明借用loopback接口的IP地址成功。
+
+### PPP
+
+#### PPP协议应用
+
+![picture 3](images/a11b2e330824eeb80067ebb9bf63e8c604b0e14536192df9a746f23948b8652d.png)  
+PPP协议是一种点到点链路层协议，主要用于在全双工的同异步链路上进行点到点的数据传输。PPP协议有如下优点：
+
+1. PPP既支持同步传输又支持异步传输，而X.25、FR（Frame Relay）等数据链路层协议仅支持同步传输，SLIP仅支持异步传输。
+2. PPP协议具有很好的扩展性，例如，当需要在以太网链路上承载PPP协议时，PPP可以扩展为PPPoE。
+3. PPP提供了LCP（Link Control Protocol）协议，用于各种链路层参数的协商。
+4. PPP提供了各种NCP（Network Control Protocol）协议（如IPCP、IPXCP)，用于各网络层参数的协商，更好地支持了网络层协议。
+5. PPP提供了认证协议：CHAP（Challenge-Handshake Authentication Protocol）、PAP（Password Authentication Protocol)，更好的保证了网络的安全性。
+6. 无重传机制，网络开销小，速度快。
+
+![image-20220519155842405](.assets/image-20220519155842405.png)
+
+#### PPP组件
+
+| 名称                                     | 作用                                         |
+| ---------------------------------------- | -------------------------------------------- |
+| 网络层控制协议  Network Control Protocol | 用于对不同的网络层协议进行连接建立和参数协商 |
+| 链路控制协议  Link Control Protocol      | 用来建立、拆除和监控PPP数据链路              |
+
+LCP在下，NCP在上，不注意很容易搞错。记忆方法：类比OSI，网络层也在链路控制层上面。
+
+PPP包含两个组件：链路控制协议LCP和网络层控制协议NCP。
+
+为了能适应多种多样的链路类型，PPP定义了链路控制协议LCP。LCP可以自动检测链路环境，如是否存在环路；协商链路参数，如最大数据包长度，使用何种认证协议等等。与其他数据链路层协议相比，PPP协议的一个重要特点是可以提供认证功能，链路两端可以协商使用何种认证协议来实施认证过程，只有认证成功之后才会建立连接。
+
+PPP定义了一组网络层控制协议NCP，每一个NCP对应了一种网络层协议，用于协商网络层地址等参数，例如IPCP用于协商控制IP协议，IPXCP用于协商控制IPX协议等。
+
+因为使用了网络层的IP，所以NCP在设备中显示的是IPCP。
+
+
+
+![image-20220519155914485](.assets/image-20220519155914485.png)
+
+<center>上图信息说明接口未配IP。</center>
+
+#### PPP链路建立过程
+
+![image-20220519151654143](.assets/image-20220519151654143.png)
+
+对于PPP链路建立过程的描述如下：
+
+1.Dead阶段也称为物理层不可用阶段。当通信双方的两端检测到物理线路激活时，就会从Dead阶段迁移至Establish阶段，即链路建立阶段。 
+
+2.在Establish阶段，PPP链路进行LCP参数协商。协商内容包括最大接收单元MRU、认证方式、魔术字（Magic Number）等选项。LCP参数协商成功后会进入Opened状态，表示底层链路已经建立。
+
+3.多数情况下,链路两端的设备是需要经过认证阶段（Authenticate）后才能够进入到网络层协议阶段。PPP链路在缺省情况下是不要求进行认证的。如果要求认证，则在链路建立阶段必须指定认证协议。认证方式是在链路建立阶段双方进行协商的。如果在这个阶段再次收到了Configure-Request报文，则又会返回到链路建立阶段。
+
+4.在Network阶段，PPP链路进行NCP协商。通过NCP协商来选择和配置一个网络层协议并进行网络层参数协商。只有相应的网络层协议协商成功后，该网络层协议才可以通过这条PPP链路发送报文。如果在这个阶段收到了Configure-Request报文，也会返回到链路建立阶段。
+
+5.NCP协商成功后，PPP链路将保持通信状态。PPP运行过程中，可以随时中断连接，例如物理链路断开、认证失败、超时定时器时间、管理员通过配置关闭连接等动作都可能导致链路进入Terminate阶段。
+
+6.在Terminate阶段，如果所有的资源都被释放，通信双方将回到Dead阶段，直到通信双方重新建立PPP连接。
+
+#### PPP帧格式
+
+![image-20220519151724057](.assets/image-20220519151724057.png)
+
+PPP采用了与HDLC协议类似的帧格式：
+
+1.Flag域标识一个物理帧的起始和结束，该字节为二进制序列01111110（0X7E）。
+
+2.PPP帧的地址域跟HDLC帧的地址域有差异，PPP帧的地址域字节固定为11111111 （0XFF），是一个广播地址。
+
+3.PPP数据帧的控制域默认为00000011(0X03)，表明为无序号帧。
+
+4.帧校验序列（FCS）是个16位的校验和，用于检查PPP帧的完整性。
+
+5.协议字段用来说明PPP所封装的协议报文类型，典型的字段值有：0XC021代表LCP报文，0XC023代表PAP报文，0XC223代表CHAP报文。
+
+6.信息字段包含协议字段中指定协议的数据包。数据字段的默认最大长度（不包括协议字段）称为最大接收单元MRU（Maximum Receive Unit），MRU的缺省值为1500字节。
+
+
+
+如果协议字段被设为0XC021，则说明通信双方正通过LCP报文进行PPP链路的协商和建立：
+
+1.Code字段，主要是用来标识LCP数据报文的类型。典型的报文类型有：配置信息报文（Configure Packets: 0x01)，配置成功信息报文(Configure-Ack: 0X02)，终止请求报文(Terminate-Request：0X05)。
+
+2.Identifier域为1个字节，用来匹配请求和响应。
+
+3.Length域的值就是该LCP报文的总字节数据。
+
+4.数据字段则承载各种TLV（Type/Length/Value）参数用于协商配置选项，包括最大接收单元，认证协议等等。
+
+#### LCP报文
+
+此表格列出了LCP用于链路层参数协商所使用四种报文类型。
+
+| 报文类型                      | 作用 &Explanations                                           |
+| ----------------------------- | ------------------------------------------------------------ |
+| Configure-Request（配置请求） | 链路层协商过程中发送的第一个报文，该报文表明点对点双方开始进行链路层参数的协商。 包含发送者试图与对端建立连接时使用的参数列表 |
+| Configure-Ack （配置响应）    | 收到对端发来的Configure-Request报文后，如果参数取值完全接受，则以此报文响应,表示完全接受对端发送的Configure-Request的参数取值 |
+| Configure-Nak（配置不响应）   | 收到对端发来的Configure-Request报文后，如果参数取值不被本端认可，则发送此报文并且携带本端可接受的配置参数，表示对端发送的Configure-Request中的某些参数取值在本端不被认可 |
+| Configure-Reject （配置拒绝） | 收到对端发来的Configure-Request报文，如果本端不能识别对端发送的Configure-Request中的某些参数，则发送此报文并且携带那些本端不能认别的配置参数，  表示对端发送的Configure-Request中的某些参数本端不能识别。 |
+
+#### LCP协商参数
+
+| 参数              | 作用                                                         | 缺省值   |
+| ----------------- | ------------------------------------------------------------ | -------- |
+| 最大接收单元  MRU | PPP数据帧中Information字段和Padding字段的总长度              | 1500字节 |
+| 认证协议          | 认证对端使用的认证协议                                       | 不认证   |
+| 魔术字            | 魔术字为一个随机产生的数字，用于检测链路环路，如果收到的LCP报文中的魔术字和本端产生的魔术字相同，则认为链路有环路 | 启用     |
+
+LCP报文携带的一些常见的配置参数有MRU，认证协议，以及魔术字。
+
+1.在VRP平台上，MRU参数使用接口上配置的最大传输单元（MTU）值来表示。
+
+2.常用的PPP认证协议有PAP和CHAP，一条PPP链路的两端可以使用不同的认证协议认证对端，但是被认证方必须支持认证方要求使用的认证协议并正确配置用户名和密码等认证信息。
+
+3.LCP使用魔术字来检测链路环路和其它异常情况。魔术字为随机产生的一个数字，随机机制需要保证两端产生相同魔术字的可能性几乎为0。
+
+
+
+收到一个Configure-Request报文之后，其包含的魔术字需要和本地产生的魔术字做比较，如果不同，表示链路无环路，则使用Confugure-Ack报文确认（其它参数也协商成功），表示魔术字协商成功。在后续发送的报文中，如果报文含有魔术字字段，则该字段设置为协商成功的魔术字。
+
+#### LCP链路参数协商
+
+##### Configure-Ack 
+
+![image-20220519153223902](.assets/image-20220519153223902.png)
+
+如图所示，RTA和RTB使用串行链路相连，运行PPP。当物理层链路变为可用状态之后，RTA和RTB使用LCP协商链路参数。本例中，RTA首先发送一个Configure-Request报文，此报文中包含RTA上配置的链路层参数。当RTB收到此Configure-Request报文之后，如果RTB能识别并接受此报文中的所有链路层参数，则向RTA回应一个Configure-Ack报文。
+
+RTA在没有收到Configure-Ack报文的情况下，会每隔3秒重传一次Configure-Request报文，如果连续10次发送Configure-Request报文仍然没有收到Configure-Ack报文，则认为对端不可用，停止发送Configure-Request报文。
+
+注：完成上述过程只是表明RTB认为RTA上的链路参数配置是可接受的。RTB也需要向RTA发送Configure-Request报文，使RTA检测RTB上的链路参数是不是可接受的。
+
+##### Configure-Nak
+
+![image-20220519153355130](.assets/image-20220519153355130.png)
+
+当RTB收到RTA发送的Configure-Request报文之后，如果RTB能识别此报文中携带的所有链路层参数，但是认为部分或全部参数的取值不能接受，即参数的取值协商不成功，则RTB需要向RTA回应一个Configure-Nak报文。
+
+在这个Configure-Nak报文中，只包含不能接受的链路层参数，并且此报文所包含的链路层参数均被修改为RTB上可以接受的取值（或取值范围）。
+
+在收到Configure-Nak报文之后，RTA需要根据此报文中的链路层参数重新选择本地配置的其它参数，并重新发送一个Configure-Request。
+
+##### Configure-Reject
+
+![image-20220519153433275](.assets/image-20220519153433275.png)
+
+当RTB收到RTA发送的Configure-Request报文之后，如果RTB不能识别此报文中携带的部分或全部链路层参数，则RTB需要向RTA回应一个Configure-Reject报文。在此Configure-Reject报文中，只包含不能被识别的链路层参数。
+
+在收到Configure-Reject报文之后，RTA需要向RTB重新发送一个Configure-Request报文，在新的Configure-Request报文中，不再包含不被对端（RTB）识别的参数。
+
+#### PPP基本配置
+
+![image-20220519153507626](.assets/image-20220519153507626.png)
+
+```bash
+[RTA]interface Serial 1/0/0 
+
+[RTA-Serial1/0/0]link-protocol ppp
+
+Warning: The encapsulation protocol of the link will be changed. Continue? [Y/N]:y 
+
+[RTA-Serial1/0/0]ip address 10.1.1.1 30
+```
+
+建立PPP链路之前，必须先在串行接口上配置链路层协议。华为ARG3系列路由器默认在串行接口上使能PPP协议。如果接口运行的不是PPP协议，需要运行**link-protocol** **ppp**命令来使能数据链路层的PPP协议。
+
+#### PPP认证模式
+
+PPP Authentication 是可以双向设置认证的。
+
+##### PAP
+
+![image-20220519153647643](.assets/image-20220519153647643.png)
+
+PAP（Password Authentication Protocol，密码认证协议）认证的工作原理较为简单。PAP认证协议为两次握手认证协议，发起方为被认证方，这就导致被认证方可以做无限次的尝试（暴力破解），只在链路建立的阶段进行认证，一旦链路建立成功将不再认证。密码以明文方式在链路上发送。
+
+LCP协商完成后，认证方要求被认证方使用PAP进行认证。
+
+被认证方将配置的用户名和密码信息使用Authenticate-Request报文以明文方式发送给认证方。
+
+认证方收到被认证方发送的用户名和密码信息之后，根据本地配置的用户名和密码数据库检查用户名和密码信息是否匹配，如果匹配，则返回Authenticate-Ack报文，表示认证成功。否则，返回Authenticate-Nak报文，表示认证失败。
+
+##### CHAP
+
+![image-20220519153718851](.assets/image-20220519153718851.png)
+
+CHAP(Challenge Handshake Authentication Protocol，挑战/质询握手认证协议)认证过程需要三次报文的交互（3 times handshakes）。为了匹配请求报文和回应报文，报文中含有Identifier字段，一次认证过程所使用的报文均使用相同的Identifier信息。
+
+1.LCP协商完成后，认证方发送一个Challenge报文给被认证方，报文中含有Identifier信息和一个随机产生的Challenge字符串，此Identifier即为后续报文所使用的Identifier。
+
+2.被认证方收到此Challenge报文之后，进行一次加密运算，运算公式为MD5{ Identifier＋密码＋Challenge }，意思是将Identifier、密码和Challenge三部分连成一个字符串，然后对此字符串做MD5运算，得到一个16字节长的摘要信息，然后将此摘要信息和端口上配置的CHAP用户名一起封装在Response报文中发回认证方。
+
+3.认证方接收到被认证方发送的Response报文之后，按照其中的用户名在本地查找相应的密码信息，得到密码信息之后，进行一次加密运算，运算方式和被认证方的加密运算方式相同，然后将加密运算得到的摘要信息和Response报文中封装的摘要信息做比较，相同则认证成功，不相同则认证失败。
+
+*为何使用CHAP认证方式相比于PAP更安全？*
+
+​	1.**加密**：被认证方的密码是被加密后才进行传输的
+
+​	2.**防暴力破解**：由认证方发起认证，有效避免暴力破解。
+
+​	3.**再认证**：在链路建立成功后具有再次认证检测机制
+
+因为上述安全性，所以CHAP目前在企业网的远程接入环境中用的比较常见。
+
+#### IPCP静态地址协商
+
+![image-20220519153755898](.assets/image-20220519153755898.png)
+
+IPCP使用和LCP相同的协商机制、报文类型，但IPCP并非调用LCP，只是工作过程、报文等和LCP相同。
+
+IP地址协商包括两种方式：静态配置协商和动态配置协商。
+
+如图所示，两端路由器配置的IP地址分别为10.1.1.1/30和10.1.1.2/30。
+
+静态IP地址的协商过程如下：
+
+1. 每一端都要发送Configure-Request报文，在此报文中包含本地配置的IP地址；
+
+2. 每一端接收到此Configure-Request报文之后，检查其中的IP地址，如果IP地址是一个合法的单播IP地址，而且和本地配置的IP地址不同（没有IP冲突），则认为对端可以使用该地址，回应一个Configure-Ack报文。
+
+#### IPCP动态地址协商
+
+![image-20220519153845428](.assets/image-20220519153845428.png)
+
+两端动态协商IP地址的过程如下：
+
+1.RTA向RTB发送一个Configure-Request报文，此报文中会包含一个IP地址0.0.0.0，表示向对端请求IP地址；
+
+2.RTB收到上述Configure-Request报文后，认为其中包含的地址（0.0.0.0）不合法，使用Configure-Nak回应一个新的IP地址10.1.1.1；
+
+3.RTA收到此Configure-Nak报文之后，更新本地IP地址，并重新发送一个Configure-Request报文，包含新的IP地址10.1.1.1；
+
+4.RTB收到Configure-Request报文后，认为其中包含的IP地址为合法地址，回应一个Configure-Ack报文。
+
+同时，RTB也要向RTA发送Configure-Request报文请求使用地址10.1.1.2，RTA认为此地址合法，回应Configure-Ack报文。
+
+#### PPP Authentication Configuration
+
+##### PAP认证Configuration
+
+<img src=".assets/image-20220519154000481.png" alt="image-20220519154000481" style="zoom:200%;" />
+
+```
+[RTA]aaa 
+[RTA-aaa]local-user huawei password cipher huawei123	#命令用于创建一个本地用户，用户名为“huawei”，密码为“huawei123”，关键字“cipher”表示密码信息在配置文件中被加密。
+[RTA-aaa]local-user huawei service-type ppp 	#命令用于设置用户“huawei”为PPP用户。
+[RTA]interface Serial 1/0/0  
+[RTA-Serial1/0/0]link-protocol ppp
+[RTA-Serial1/0/0]ppp authentication-mode pap	#命令用于在认证方开启PAP认证的功能，即要求对端使用PAP认证。
+[RTA-Serial1/0/0]ip address 10.1.1.1 30
+```
+
+```
+[RTB]interface Serial 1/0/0  
+[RTB-Serial1/0/0]link-protocol ppp
+[RTB-Serial1/0/0]ppp pap local-user huawei password cipher huawei123 	#命令用于在被认证方配置PAP使用的用户名和密码信息。
+[RTB-Serial1/0/0]ip address 10.1.1.2 30
+```
+
+###### 配置验证
+
+```
+<RTB>debugging ppp pap all
+Mar 20 2016 04:50:24.280.4+00:00 RTB PPP/7/debug2:
+  PPP State Change: 
+      Serial1/0/0 PAP : Initial --> SendRequest 
+Mar 20 2016 04:50:24.290.3+00:00 RTB PPP/7/debug2:
+  PPP State Change: 
+      Serial1/0/0 PAP : SendRequest --> ClientSuccess
+……
+```
+
+##### CHAP认证模式 Configuration
+
+![image-20220519155303626](.assets/image-20220519155303626.png)
+
+```
+[RTA]aaa 
+[RTA-aaa]local-user huawei password cipher huawei123	#命令用于创建一个本地用户，用户名为“huawei”，密码为“huawei123”；关键字“cipher”表示密码信息在配置文件中加密保存。
+[RTA-aaa]local-user huawei service-type ppp 	#命令用于设置用户“huawei”为PPP用户。
+[RTA]interface Serial 1/0/0  
+[RTA-Serial1/0/0]link-protocol ppp
+[RTA-Serial1/0/0]ppp authentication-mode chap	#命令用于在认证方开启CHAP认证的功能，即要求对端使用CHAP认证。
+```
+
+```
+[RTB]interface Serial 1/0/0  
+[RTB-Serial1/0/0]link-protocol ppp
+[RTB-Serial1/0/0]ppp chap user huawei	#命令用于在被认证方设置CHAP使用的用户名为“huawei”。
+[RTB-Serial1/0/0]ppp chap password cipher huawei123	#命令用于在被认证方设置CHAP使用的密码为“huawei123”。
+```
+
+###### 配置验证
+
+```
+<RTB>debugging ppp chap all
+Mar 20 2016 05:15:54.230.1+00:00 RTB PPP/7/debug2:
+PPP State Change: 
+      Serial1/0/0 CHAP : Initial --> ListenChallenge 
+Mar 20 2016 05:15:54.230.7+00:00 RTB PPP/7/debug2:
+  PPP State Change: 
+      Serial1/0/0 CHAP : ListenChallenge --> SendResponse 
+Mar 20 2016 05:15:54.250.3+00:00 RTB PPP/7/debug2:
+  PPP State Change: 
+      Serial1/0/0 CHAP : SendResponse --> ClientSuccess 
+……
+#该配置验证eNSP我看不到，不知道是不是模拟器的原因
+```
+
+### Q
+
+发送端在发送Configure-Request之后，收到哪个消息才能表示PPP链路建立成功？
+
+如果使用PPP作为链路层封装协议，需要建立PPP链路的两端设备都必须发送Configure-Request报文，当每个设备均已收到对端发来的Configure-Ack报文后，就表示链路的建立过程已成功完成。
+
+
+
+CHAP认证方式需要交互几次报文？
+
+CHAP认证协议为三次握手认证协议，需要交互三次报文来认证对方身份。
+

@@ -5,7 +5,7 @@ df [选项] [文件]：display file查看分区使用、挂载情况
 
 du [选项] [文件]: dis play usage查看文件占用空间情况.计算每个文件的磁盘用量，目录则取总用量
 
-root@kali:/home/kali# ifconfig	查看IP，
+root@kali:/home/kali# ifconfig	查看IP，但必须以管理员权限运行，普通用户无权。
 
 ip addr也可简写为ip a	查看IP
 
@@ -28,40 +28,37 @@ uname -a 查看Linux内核版本命令
 
 
 ## 1、目录名：
-
-/boot：顾名思义、
-
-/root ：同上
-
-/run：同上
-
-/home：同上
-
-/etc：ETCetera
-
-/bin：BINaries
-
-/dev：DEVices
+/bin：BINaries存储二进制文件，比如命令
+/boot：存放与OS启动相关的文件
+/dev：DEVices存放外部设备信息，例如硬盘、光驱
+/etc：ETCetera存放配置文件
+/home：每个普通用户都在此单独存放私有&配置文件。
+/root ：超级用户root的目录。并不是所有Linux的超级用户都叫root，只是默认叫root。类似即管理员存放私有文件路径
+/run：存放系统运行数据
+/sbin：Super BINariesor || Superuser BINaries    与bin类似，里边有些命令可以和bin共用
+/tmp：TeMPorary    临时目录，超过10天的文件会被自动清空。
+/usr：Unix System ResourcEsor || Unix SharEd Resources（这个很重要，很多人会认为这个是user）与unix资源相关，存放第三方软件.安装软件，包括文件&静态只读数据的程序，重要的子目录，包括：
+            /usr/bin:用户命令
+            /usr/sbin:系统管理命令
+            /usr/local：局部定制软件
+/var：VARiable    存放etc中的配置文件指向的服务文件。如database，缓存目录，日志文件，打印假脱机文件&网站内容，会根据应用发生变化。
 
 /lib：LIBraries
 
 /mnt：MouNT
 
-/proc：PROCesses
+/proc：PROCesses    Kernel进程&配置交互目录
 
-/tmp：TeMPorary
-
-/var：VARiable
 
 /srv：SeRVices
 
 /opt：OPTional
 
-/sbin：Super BINariesor || Superuser BINaries/
 
-sys：SYStem
 
-usr：Unix System ResourcEsor || Unix SharEd Resources（这个很重要，很多人会认为这个是user）
+/sys：SYStem
+
+
 
 ## 2、常用命令：
 
@@ -147,7 +144,8 @@ dd -- Data Description（有说是Convert and Copy， 但是cc被用掉了，就
 
 parted -- PARTition EDitor
 
-fdisk -- Format DISK		sudo fdisk --list,sudo fdisk -l,查看硬盘分区表
+fdisk -- Format DISK		
+sudo fdisk --list,    sudo fdisk -l,查看硬盘分区表
 
 lspci -- LiSt Peripheral Component Interconnectlscpu -- LiSt Central Process Unit
 
@@ -210,12 +208,14 @@ groupdel -- GROUP DELete
 groupmod -- GROUP MODify
 
 groupmems -- GROUP MEMberS
-
+sudo su    提权
 ### 2.5、系统管理：
+
+init 6	#reboot
 
 depmod -- DEPend MODule
 
-hostname	查看当前用户名
+hostname	查看当前用户名	
 
 lsmod -- LiSt MODule
 
@@ -233,7 +233,7 @@ fsck -- File System Consistency Check
 
 ps -- Processes Status
 
-su -- Substitute User更换用户
+su -- Substitute User|| Switch User更换用户
 
 bash -- Bourne Again SHell
 

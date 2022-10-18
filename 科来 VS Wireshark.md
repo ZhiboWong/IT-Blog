@@ -6,6 +6,8 @@
 
 UI对中文用户友好
 
+有一次抓FTP抓不到，同时抓包的Wireshark抓到了
+
 
 
 Wireshark

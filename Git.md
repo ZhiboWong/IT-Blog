@@ -210,6 +210,7 @@ git commit -m "消息内容"    # 提交暂存区中的内容到本地仓库 -m 
 
 #git commit 进入vim编辑器后如何保存并退出呢？先按ESC键退出编辑模式，进入命令模式。切换成大写，连续输入2次Z即可保存并退出。
 ```
+若git push 报错Everything up to date, 检查是不是忘记git commit -m 了。
 
 ### 6.3 **忽略文件**
 

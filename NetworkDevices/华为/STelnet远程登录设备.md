@@ -20,7 +20,6 @@ Stelnet提供安全的认证方式，用户可以通过STelnet安全地登录远
 2、创建SSH用户，并配置其认证方式为password认证。3步：密码、用户级别、服务协议，3者顺序不能颠倒，否则3者配不全。
 3、使能STelnet服务器功能。
 4、配置SSH用户的认证方式、服务方式。
-
 5、用户在本地PC端通过STelnet方式登录SSH服务器。
 
 
@@ -36,7 +35,7 @@ Stelnet提供安全的认证方式，用户可以通过STelnet安全地登录远
 [SSH Server-ui-vty0-4] protocol inbound ssh 
 [SSH Server-ui-vty0-4] quit
 [SSH Server] aaa 
-[SSH Server-aaa] local-user client001 password cipher Huawei@123 #创建SSH用户client001(名字可变)并配置其认证方式为cipher
+[SSH Server-aaa] local-user client001 password cipher Huawei@123 #创建SSH用户client001(名字可变)并配置其认证方式为cipher.账户密码是在aaa视图创建按。
 [SSH Server-aaa] local-user client001 privilege level 3 #指定用户级别。
 [SSH Server-aaa] local-user client001 service-type ssh #设置服务类型为ssh
 [SSH Server-aaa] quit 
