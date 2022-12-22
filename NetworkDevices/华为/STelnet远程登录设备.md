@@ -43,6 +43,11 @@ Stelnet提供安全的认证方式，用户可以通过STelnet安全地登录远
 [SSH Server] ssh user client001 authentication-type password #配置SSH用户的认证方式
 [SSH Server] ssh user client001 service-type stelnet	#配置SSH用户的服务方式。若是路由器，无需配置这条命令。
 
+若是较新版本的SW，还需要配置ssh server-source all-interface。
+因为即默认情况下，交换机中存在着以下命令：
+  undo ssh server-source all-interface
+  此条命令的意思为，交换机的所有接口拒绝SSH登陆；
+
 # 之后配置本地PC的PuTTY或者CRT软件参数，远程连接设备
 ```
 

@@ -632,7 +632,7 @@ directory -read-write
 
 即使在未移动之前，交换机CAM表里已经有端口和MAC信息，当拔掉网线进行移动时，CAM表立刻老化。后期交换机再接收到帧时，最终经过交换机的学习，交换机将学习CAM表。
 
-### VLAN间路由
+### VLAN间路由（三层交换）
 
 MLS（MultiLayer Switch）是执行三层信息的硬件交换的交换机,即有带ip的vlanif 接口的SW，可实现VLAN间路由。
 
@@ -1011,6 +1011,7 @@ LSA一共三类。一类、二类的LSA被限制在单个区域，而三类的LS
 
 
 ##### 5种报文&7种状态
+LSA属于LSU。
 
 DBD packet contains the following fields :
 
@@ -1023,10 +1024,6 @@ DBD packet contains the following fields :
 7. Options
 
 邻居的关系不如邻接紧密。邻居只是打招呼而已。邻接关系，双方会发送DD报文，共享LSDB内容。这也是为啥说邻居关系包含邻接。
-
-![ospf lsdb](.assets/ospf lsdb.jpg)
-
-<center>DBD包详情</center>
 
 每个路由器一开始都会认为自己是主路由器，所以会出现多个DB包Master值都是1，关键就在RID。RID越大，就越有资格成为主Router。
 
@@ -1087,7 +1084,11 @@ RID为2.2.2.2说“请你和我这样说，DD Sequence：472。DB Description里
 
 RID为1.1.1.1的路由器说“DD Sequence：472。够了，主从关系已经确立。别再说DD Sequence了。”
 
+##### Config
 
+```
+[Huawei-ospf-1]bandwidth-reference 100    #调整带宽参考值，默认为100Mbps.需要在整个OSPF网络中统一进行调整
+```
 
 #### RIP VS ospf
 
@@ -1178,7 +1179,7 @@ Serial1/0/1              unassigned           up         down
 #### PPP协议应用
 
 ![picture 3](images/a11b2e330824eeb80067ebb9bf63e8c604b0e14536192df9a746f23948b8652d.png)  
-PPP协议是一种点到点链路层协议，主要用于在全双工的同异步链路上进行点到点的数据传输。PPP协议有如下优点：
+PPP(P2P协议)是一种点到点链路层协议，主要用于在全双工的同异步链路上进行点到点的数据传输。PPP协议有如下优点：
 
 1. PPP既支持同步传输又支持异步传输，而X.25、FR（Frame Relay）等数据链路层协议仅支持同步传输，SLIP仅支持异步传输。
 2. PPP协议具有很好的扩展性，例如，当需要在以太网链路上承载PPP协议时，PPP可以扩展为PPPoE。
@@ -1480,7 +1481,7 @@ Mar 20 2016 05:15:54.250.3+00:00 RTB PPP/7/debug2:
 #该配置验证eNSP我看不到，不知道是不是模拟器的原因
 ```
 
-### Q
+#### Q
 
 发送端在发送Configure-Request之后，收到哪个消息才能表示PPP链路建立成功？
 
