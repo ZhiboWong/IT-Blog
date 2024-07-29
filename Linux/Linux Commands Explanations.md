@@ -1,106 +1,12 @@
 ```shell
 
-cd ~	切换到当前登陆用户的目录
-df [选项] [文件]：display file查看分区使用、挂载情况
-
-du [选项] [文件]: dis play usage查看文件占用空间情况.计算每个文件的磁盘用量，目录则取总用量
-
-root@kali:/home/kali# ifconfig	查看IP，但必须以管理员权限运行，普通用户无权。
-
-ip addr也可简写为ip a	查看IP
-
-lsblk	查看磁盘情况
-
-mv [文件] [文件夹]:move 移动
-
-ps	全称Process Status，用来列出系统中当前运行的进程。
-
-pwd:Print Working Directory
-
-rm:remove
-
-sudo	全称superuserdo 超管
-uname -a 查看Linux内核版本命令
-```
 
 
 
-
-
-## 1、目录名：
-/bin：BINaries存储二进制文件，比如命令
-/boot：存放与OS启动相关的文件
-/dev：DEVices存放外部设备信息，例如硬盘、光驱
-/etc：ETCetera存放配置文件
-/home：每个普通用户都在此单独存放私有&配置文件。
-/root ：超级用户root的目录。并不是所有Linux的超级用户都叫root，只是默认叫root。类似即管理员存放私有文件路径
-/run：存放系统运行数据
-/sbin：Super BINariesor || Superuser BINaries    与bin类似，里边有些命令可以和bin共用
-/tmp：TeMPorary    临时目录，超过10天的文件会被自动清空。
-/usr：Unix System ResourcEsor || Unix SharEd Resources（这个很重要，很多人会认为这个是user）与unix资源相关，存放第三方软件.安装软件，包括文件&静态只读数据的程序，重要的子目录，包括：
-            /usr/bin:用户命令
-            /usr/sbin:系统管理命令
-            /usr/local：局部定制软件
-/var：VARiable    存放etc中的配置文件指向的服务文件。如database，缓存目录，日志文件，打印假脱机文件&网站内容，会根据应用发生变化。
-
-/lib：LIBraries
-
-/mnt：MouNT
-
-/proc：PROCesses    Kernel进程&配置交互目录
-
-
-/srv：SeRVices
-
-/opt：OPTional
-
-
-
-/sys：SYStem
 
 
 
 ## 2、常用命令：
-
-### 2.1、文件及文件夹管理：
-
-ls -- LiSt
-
-cd -- Change Directory
-
-pwd -- Print Working Directory
-
-cp -- CoPy
-
-mv -- MoVe
-
-rm -- ReMove
-
-pushd -- PUSH to Directory
-
-popd -- POP from Directory
-
-mkdir -- MaKe DIRectory
-
-rmdir -- ReMove DIRectory
-
-cat -- conCATenate（连接）连接文件或标准输入并打印
-
-​	cat /proc/version 查看Linux内核版本命令
-
-sed -- Stream EDitor
-
-diff -- DIFFerence
-
-wc -- Word Count
-
-chmod -- CHange MODe
-
-chown -- CHange OWNer
-
-chgrp -- CHange GRouP
-
-awk -- Aho Weinberger and Kernighan
 
 gawk -- Gnu AWK
 
@@ -231,7 +137,6 @@ mkfs -- MaKe FileSystem
 
 fsck -- File System Consistency Check
 
-ps -- Processes Status
 
 su -- Substitute User|| Switch User更换用户
 

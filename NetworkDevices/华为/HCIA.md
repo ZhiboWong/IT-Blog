@@ -625,6 +625,7 @@ directory -read-write
 在使用FTP Protocol进行路由器软件升级时，传输模式应选用二进制模式。
 
 ## SW
+通过实验证实，SW可接收处理带Tag的帧。
 
 ### P17交换网络基础
 
@@ -770,6 +771,7 @@ Last TC occurred    :GigabitEthernet0/0/1
 
 
 ### 静态
+当配置了默认路由，但`dis ip rou`路由表里不显示时，应该检查是否没有配置交换机可达的ip。
 
 #### Floating Route
 
@@ -1493,3 +1495,20 @@ CHAP认证方式需要交互几次报文？
 
 CHAP认证协议为三次握手认证协议，需要交互三次报文来认证对方身份。
 
+## IPv6
+RIR=区域互联网注册机构
+ 
+win里
+以太网适配器 VMware Network Adapter VMnet8:
+```
+   连接特定的 DNS 后缀 . . . . . . . :
+   本地链接 IPv6 地址. . . . . . . . : fe80::576d:4b37:cb2e:bbeb%19
+```
+`%19`不是IPv6的部分
+![](vx_images/50330215240466.png)
+ 
+IPv6没有mask，只有前缀。
+
+IPv6 Addr 和GW Addr不像IPv4，可以没有联系。
+
+GUA=Global unicast addresses

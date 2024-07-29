@@ -2,9 +2,9 @@
 
 线刷 tgz
 
-参考视频
 
-https://www.bilibili.com/video/BV1Ly4y1u7YE?share_source=copy_web
+
+[参考视频](https://www.bilibili.com/video/BV1Ly4y1u7YE?share_source=copy_web)
 
 ## 1.Unlock Bootloader Lock
 
